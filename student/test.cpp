@@ -6,6 +6,7 @@
 #include <array>
 #include <vector>
 #include <iomanip>
+#include <ctime>
 
 using namespace std;
 
@@ -24,6 +25,9 @@ vector<Question> vect;
 
 void drawLine (ostream&, int, char);
 
+
+
+
 int main () {
     // Get the name of test file
     cout << "Please enter the name of the test: ";
@@ -38,6 +42,16 @@ int main () {
         cout << "File couldn't be opened!\n";
         exit(EXIT_FAILURE);
     }
+
+
+    // The date and time of taking the test
+    time_t rawTime;
+    time(&rawTime);
+    struct tm* timeInfo;
+    timeInfo = localtime(&rawTime);
+    char dateOfTest[30];
+    strftime(dateOfTest, 30, "%a %b %d %Y %I:%M %p", timeInfo);
+
 
     Question q;
     string question;
@@ -134,9 +148,15 @@ int main () {
 
 
 
+    // Here, I'm creating a numerical separator of date and time
+    // for distinguishing files from each other
+    char separator[15];
+    strftime(separator, 15, "%Y%m%d%H%M%S", timeInfo);
+    
+
     // Calculating the score and mark and Displaying the result
     // and Outputing the wrong questions into file
-    ofstream output1{testName + "_WAQ.txt", ios::out};
+    ofstream output1{testName + separator + "_WAQ.txt", ios::out};
     if (!output1) {
         cerr << "File couldn't be opened!\n";
         exit(EXIT_FAILURE);
@@ -148,6 +168,7 @@ int main () {
     int flag;
 
     cout << "\n\nQuestions That You Answered Wrong: \n";
+    output1 << dateOfTest << endl << endl;
     for (int i{0}; i < vect.size(); ++i) {
         flag = 0;
         for (int j{0}; j < vect[i].trueAlt.size(); ++j) {
@@ -231,11 +252,13 @@ int main () {
         exit(EXIT_FAILURE);
     }
 
+    output2 << dateOfTest << endl;
     output2 << "You Got " << mark << ".\n";
     output2 << fixed << setprecision(2);
     output2 << "You Answered Correctly " << trueOnes << " Questions From " <<
         vect.size() << " Questions. That Is " << score << "%\n";
     drawLine(output2, 80, '~');
+    output2 << endl;
 
     return 0;
 }

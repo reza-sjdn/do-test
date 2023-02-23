@@ -98,12 +98,12 @@ int main () {
     // Loops questions
     char ans;
     for (int q{0}; q < vect.size(); ++q) {
-        drawLine(cout, 84, '-');
+        drawLine(cout, 170, '-');
         cout << q + 1 << ") " << vect[q].question << endl << endl;
 
         // Loops alters
         for (int a{0}; a < vect[q].alters.size(); ++a) {
-            cout << a + 1 << ". " << left << setw(18) << vect[q].alters[a];
+            cout << a + 1 << ". " << vect[q].alters[a] << endl;
         }
 
         // Get user answer and add it to user answer collector
@@ -114,7 +114,7 @@ int main () {
         } while (userAnswer <= 0 || userAnswer > vect[q].alters.size());
 
         userAnswersArr[q] = userAnswer;
-        drawLine(cout, 84, '-');
+        drawLine(cout, 170, '-');
 
 
         // Maybe user wants to get back to a specific question
@@ -178,7 +178,7 @@ int main () {
         if (flag) ++trueOnes;
         else {
             // Display the wrong answered questions
-            drawLine(cout, 84, '.');
+            drawLine(cout, 170, '.');
             cout << i + 1 << ") " << vect[i].question << endl;
             cout << "Your choice was " << userAnswersArr[i];
             cout << " (" << vect[i].alters[userAnswersArr[i] - 1] << "), ";
@@ -194,7 +194,7 @@ int main () {
                 }
             }
 
-            drawLine(cout, 84, '.');
+            drawLine(cout, 170, '.');
 
 
             // Output the wrong answered questions into file
@@ -234,12 +234,12 @@ int main () {
     else mark = 'F';
 
     cout << endl << endl;
-    drawLine(cout, 84, '=');
+    drawLine(cout, 170, '=');
     cout << "You Got " << mark << ".\n";
     cout << fixed << setprecision(2);
     cout << "You Answered Correctly " << trueOnes << " Questions From " <<
         vect.size() << " Questions. That Is " << score << "%\n";
-    drawLine(cout, 84, '=');
+    drawLine(cout, 170, '=');
 
 
 
